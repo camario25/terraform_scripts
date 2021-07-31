@@ -12,6 +12,35 @@ resource "aws_instance" "win-mario" {
   }
 }
 
+resource "aws_security_group" "allow_rdp" {
+  name        = "allow_rdp"
+  description = "Allow RDP inbound traffic"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description      = "RDP from VPC"
+    from_port        = 3389
+    to_port          = 3389
+    protocol         = "tcp"
+    cidr_blocks      = [aws_vpc.main.cidr_block]
+    ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "Mario_allow_rdp"
+  }
+}
+
+
+
 output "ip" {
  
 value="${aws_instance.win-mario.public_ip}"
