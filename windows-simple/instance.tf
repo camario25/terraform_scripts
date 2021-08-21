@@ -12,8 +12,8 @@ resource "aws_instance" "win-mario" {
   }
 }
 
-resource "aws_security_group" "allow_rdp" {
-  name        = "allow_rdp"
+resource "aws_security_group" "Mario_allow_rdp" {
+  name        = "Mario_allow_rdp"
   description = "Allow RDP inbound traffic"
   vpc_id      = aws_vpc.main.id
 
